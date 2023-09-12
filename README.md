@@ -5,6 +5,15 @@ Implement a News API.
 
 ## Demo Videos
 
+
+https://github.com/Rai09Tejas/news_app/assets/91219997/ed1054b3-51cd-4641-bb87-37b7dc6f69f2
+
+
+
+https://github.com/Rai09Tejas/news_app/assets/91219997/2184d3b0-58f7-4e34-8a3e-3513ae5927ce
+
+
+
 Recorded demo videos are present in the project, named as:
 - vid1.mp4
 - vid2.mp4
