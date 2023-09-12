@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quantum_task/providers/auth_provider.dart';
@@ -27,6 +30,22 @@ class _LoginScreenState extends State<LoginScreen> {
   static bool isLogin = true;
   static bool isLoading = false;
   static bool checkbox = false;
+
+  final countryPicker = const FlCountryCodePicker();
+  CountryCode countryCode = CountryCode.fromMap(
+      const {"name": "India", "code": "IN", "dialCode": "+91"});
+
+  TextStyle headerTextStyle = const TextStyle(
+    color: Colors.red,
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+  );
+
+  TextStyle tfTitleTextStyle = const TextStyle(
+    color: Colors.black,
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -130,8 +149,15 @@ class _LoginScreenState extends State<LoginScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("SignIn into your \n Account"),
-          const Text("Email"),
+          Text(
+            "SignIn into your \n Account",
+            style: headerTextStyle,
+          ),
+          heightBox(10),
+          Text(
+            "Email",
+            style: tfTitleTextStyle,
+          ),
           TextFormField(
               controller: emailController,
               validator: (input) =>
@@ -142,7 +168,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     Icons.email,
                     color: Colors.red,
                   ))),
-          const Text("Password"),
+          heightBox(10),
+          Text("Password", style: tfTitleTextStyle),
           TextFormField(
               controller: passwordController,
               obscureText: true,
@@ -156,23 +183,55 @@ class _LoginScreenState extends State<LoginScreen> {
                     Icons.lock_outlined,
                     color: Colors.red,
                   ))),
-          const Text("Forgot Password?"),
-          const Text("Login with"),
+          heightBox(10),
+          const Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                "Forgot Password ?",
+                style:
+                    TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+              )),
+          heightBox(30),
+          const Align(
+              alignment: Alignment.center,
+              child: Text(
+                "Login with",
+                style: TextStyle(fontSize: 18),
+              )),
+          heightBox(20),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [Image.asset(googleIcon), Image.asset(fbIcon)],
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              InkWell(
+                  onTap: () {
+                    AuthProvider().googleSignIn(context);
+                  },
+                  child: Image.asset(googleIcon)),
+              Image.asset(fbIcon)
+            ],
           ),
+          heightBox(20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text("Don't have an Account?"),
+              const Text("Don't have an Account ? ",
+                  style: TextStyle(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15)),
               GestureDetector(
                   onTap: () {
                     setState(() {
                       isLogin = false;
                     });
                   },
-                  child: const Text("Register Now"))
+                  child: const Text(
+                    "Register Now",
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15),
+                  ))
             ],
           )
         ],
@@ -194,8 +253,12 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Create an \n Account"),
-            const Text("Name"),
+            Text(
+              "Create an \n Account",
+              style: headerTextStyle,
+            ),
+            heightBox(10),
+            Text("Name", style: tfTitleTextStyle),
             TextFormField(
                 controller: nameController,
                 validator: (input) => input!.trim().isEmpty
@@ -210,7 +273,7 @@ class _LoginScreenState extends State<LoginScreen> {
             heightBox(
               getDeviceHeight(context) * 0.01,
             ),
-            const Text("Email"),
+            Text("Email", style: tfTitleTextStyle),
             TextFormField(
                 controller: emailController,
                 validator: (input) =>
@@ -224,23 +287,69 @@ class _LoginScreenState extends State<LoginScreen> {
             heightBox(
               getDeviceHeight(context) * 0.01,
             ),
-            const Text("Contact no"),
-            TextFormField(
-                maxLength: 10,
-                controller: contactController,
-                validator: (input) => input!.trim().isEmpty
-                    ? 'Please enter a valid username'
-                    : null,
-                decoration: const InputDecoration(
-                    hintText: "9876543210",
-                    suffixIcon: Icon(
-                      Icons.lock_outlined,
-                      color: Colors.red,
-                    ))),
+            Text("Contact no", style: tfTitleTextStyle),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () async {
+                    final code =
+                        await countryPicker.showPicker(context: context);
+                    if (code != null) {
+                      log(code.toString());
+                      setState(() {
+                        countryCode = code;
+                      });
+                    }
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 4.0),
+                    margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Row(
+                      children: [
+                        countryCode.flagImage,
+                        widthBox(10),
+                        Text(
+                          countryCode.code,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        widthBox(10),
+                        Text(
+                          countryCode.dialCode,
+                          style: const TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                        const Icon(Icons.arrow_drop_down)
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: TextFormField(
+                      maxLength: 10,
+                      controller: contactController,
+                      validator: (input) => input!.trim().isEmpty
+                          ? 'Please enter a valid username'
+                          : null,
+                      decoration: const InputDecoration(
+                          hintText: "9876543210",
+                          suffixIcon: Icon(
+                            Icons.phone,
+                            color: Colors.red,
+                          ))),
+                ),
+              ],
+            ),
             heightBox(
               getDeviceHeight(context) * 0.01,
             ),
-            const Text("Password"),
+            Text("Password", style: tfTitleTextStyle),
             TextFormField(
                 controller: passwordController,
                 obscureText: true,
@@ -258,30 +367,49 @@ class _LoginScreenState extends State<LoginScreen> {
               getDeviceHeight(context) * 0.01,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Checkbox(
+                    activeColor: Colors.red,
                     value: checkbox,
                     onChanged: (bool? val) {
                       setState(() {
                         checkbox = val!;
                       });
                     }),
-                const Text("I agree with "),
-                const Text("term & condition"),
+                const Text("I agree with ",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 18)),
+                const Text("term & condition",
+                    style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18)),
               ],
             ),
+            heightBox(20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Already have an account?"),
+                const Text("Already have an account?",
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15)),
                 GestureDetector(
                     onTap: () {
                       setState(() {
                         isLogin = true;
                       });
                     },
-                    child: const Text("Sign In!"))
+                    child: const Text("Sign In!",
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15)))
               ],
             )
           ],

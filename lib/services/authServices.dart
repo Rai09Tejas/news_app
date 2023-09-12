@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../utils/models/userModel.dart';
 
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   FirebaseAuth get auth => _auth;
 
@@ -56,5 +58,38 @@ class AuthMethods {
       result = err.toString();
     }
     return result;
+  }
+
+
+  
+  Future<User?> handleGoogleSignIn() async {
+    try {
+      // Trigger Google Sign-In
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+
+      // If the user cancels the sign-in, googleUser will be null
+      if (googleUser == null) {
+        return null;
+      }
+
+      // Authenticate with Firebase using Google Sign-In credentials
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      // Sign in to Firebase with the Google credentials
+      final UserCredential authResult =
+          await _auth.signInWithCredential(credential);
+      final User? user = authResult.user;
+
+      // Return the user that was signed in
+      return user;
+    } catch (error) {
+      print("Error during Google Sign-In: $error");
+      return null;
+    }
   }
 }

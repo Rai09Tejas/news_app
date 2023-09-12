@@ -65,4 +65,12 @@ class AuthProvider extends ChangeNotifier {
     AuthMethods().auth.signOut();
     Navigator.pushReplacementNamed(context, LoginScreen.tag);
   }
+
+  Future<void> googleSignIn(BuildContext context) async {
+    User? googleSignInUser = await AuthMethods().handleGoogleSignIn();
+
+    if (googleSignInUser != null) {
+      Navigator.pushReplacementNamed(context, HomeScreen.tag);
+    }
+  }
 }
