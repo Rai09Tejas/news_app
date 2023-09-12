@@ -1,17 +1,20 @@
 # news_app
 # quantum_task
 
-A new Flutter project.
+Implement a News API.
 
-## Getting Started
+## Key Elements
 
-This project is a starting point for a Flutter application.
+This project is a starting point for a Flutter application. Above Flutter application contains usage of following
 
-A few resources to get you started if this is your first Flutter project:
+Frameworks:
+- Flutter
+- Firebase
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Libraries:
+- Firebase Libraries: firebase_core, cloud_firestore, firebase_auth, google_sign_in, flutter_facebook_auth
+- Google Fonts: google_fonts: ^4.0.4
+- HTTP for API: http: ^0.13.6
+- Country picker: fl_country_code_picker: ^0.0.4
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
