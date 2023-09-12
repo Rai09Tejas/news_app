@@ -14,10 +14,6 @@ https://github.com/Rai09Tejas/news_app/assets/91219997/2184d3b0-58f7-4e34-8a3e-3
 
 
 
-Recorded demo videos are present in the project, named as:
-- vid1.mp4
-- vid2.mp4
-
 
 ## Key Elements
 
