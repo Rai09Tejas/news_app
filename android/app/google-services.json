@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1079169486407",
+    "project_id": "quantumtask-4aa2c",
+    "storage_bucket": "quantumtask-4aa2c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1079169486407:android:ac72d06b9e128dd157ab62",
+        "android_client_info": {
+          "package_name": "com.example.quantum_task"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1079169486407-i4986rnnt3bm3n7udtbr68ic57svv310.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.quantum_task",
+            "certificate_hash": "a51de0c3d0b3b2f6861238afe4911c2e0938eb6d"
+          }
+        },
+        {
+          "client_id": "1079169486407-rlkmf1adbvu92qj0vogh1gi3ebb75mm2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCl5GfbFaCp0qc27fQXb0TjmxpqgzybpjM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1079169486407-rlkmf1adbvu92qj0vogh1gi3ebb75mm2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
