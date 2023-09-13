@@ -38,6 +38,7 @@ class AuthProvider extends ChangeNotifier {
     } else {
       Navigator.pop(context);
     }
+    notifyListeners();
   }
 
   logInUser(BuildContext context, UserModel user) async {
@@ -59,6 +60,7 @@ class AuthProvider extends ChangeNotifier {
     } else {
       showGlobalSnackBar(result);
     }
+    notifyListeners();
   }
 
   logout(BuildContext context) {
@@ -72,5 +74,15 @@ class AuthProvider extends ChangeNotifier {
     if (googleSignInUser != null) {
       Navigator.pushReplacementNamed(context, HomeScreen.tag);
     }
+    notifyListeners();
+  }
+
+  Future<void> signInWithFacebook(BuildContext context) async {
+    User? user = await AuthMethods().signInWithFacebook();
+
+    if (user != null) {
+      Navigator.pushReplacementNamed(context, HomeScreen.tag);
+    }
+    notifyListeners();
   }
 }

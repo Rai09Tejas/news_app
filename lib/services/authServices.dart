@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../utils/models/userModel.dart';
@@ -60,8 +61,6 @@ class AuthMethods {
     return result;
   }
 
-
-  
   Future<User?> handleGoogleSignIn() async {
     try {
       // Trigger Google Sign-In
@@ -89,6 +88,24 @@ class AuthMethods {
       return user;
     } catch (error) {
       print("Error during Google Sign-In: $error");
+      return null;
+    }
+  }
+
+  Future<User?> signInWithFacebook() async {
+    try {
+      final LoginResult loginResult = await FacebookAuth.instance.login();
+
+      final OAuthCredential facebookAuthCredential =
+          FacebookAuthProvider.credential(loginResult.accessToken!.token);
+
+      final UserCredential authResult =
+          await _auth.signInWithCredential(facebookAuthCredential);
+      final User? user = authResult.user;
+
+      return user;
+    } catch (error) {
+      print("Error during Facebook Sign-In: $error");
       return null;
     }
   }

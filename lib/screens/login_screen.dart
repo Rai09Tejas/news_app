@@ -207,7 +207,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     AuthProvider().googleSignIn(context);
                   },
                   child: Image.asset(googleIcon)),
-              Image.asset(fbIcon)
+              InkWell(
+                  onTap: () => AuthProvider().signInWithFacebook(context),
+                  child: Image.asset(fbIcon))
             ],
           ),
           heightBox(20),

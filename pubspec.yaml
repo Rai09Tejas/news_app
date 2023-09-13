@@ -47,6 +47,7 @@ dependencies:
   fl_country_code_picker: ^0.0.4
   flutter_facebook_auth: ^5.0.11
   url_launcher: ^6.1.11
+  flutter_facebook_login: ^3.0.0
 
 dev_dependencies:
   flutter_test:
